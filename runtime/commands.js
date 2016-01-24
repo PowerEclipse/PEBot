@@ -12,7 +12,8 @@ var ConfigFile = require("../config.json"),
   DebugLogger = require("./logger.js").DebugModeLog,
   Defaulting = require("./serverdefaulting.js"),
   VerboseLogger = require("./logger.js").VerboseModeLog,
-  DJ = require("./djlogic.js");
+  DJ = require("./djlogic.js"),
+  rules = require("./rules.js");
 
 if (ConfigFile.bot_settings.verbose_logging === true) {
   VerboseLog = true;
@@ -131,6 +132,21 @@ level: 0,
 fn: function(bot, msg){
   bot.sendMessage(msg.channel, "**WOOSH**");
 }};
+
+Commands.rule =
+Commands.rules = {
+  name: "rules",
+  help: "Something about keeping the peace",
+  usage: "[number]",
+  level: 1,
+  fn: function(bot, msg, suffix) {
+	  if (VerboseLog === true) {
+		  VerboseLogger.debug("VERBOSE LOG: Rules is being executed.");
+	  }
+	  rules.arg(bot, msg, suffix);
+  }
+};
+
 
 Commands["join-voice"] = {
   name: "join-voice",
