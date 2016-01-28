@@ -15,8 +15,8 @@ exports.create = function(bot) {
       msgArray.push("Hello! My name is " + bot.user.username + ", welcome to my base camp!");
       msgArray.push("With this server, you can monitor and contol the bot.");
       msgArray.push("`leave` will not function in this server, as I'm the owner of this server, so be assured that I'll always be in at least 1 server.");
-      msgArray.push("There are some special commands that only work in this server, `adminme` for example if you're my master."); // TODO: Not yet actually, I haven't done that yet.
-      msgArray.push("Thanks for choosing WildBeast as your framework, have fun!");
+      msgArray.push("There are some special commands that only work in this server, `setowner` for example if you're my master."); // TODO: Not yet actually, I haven't done that yet.
+      msgArray.push("Thanks for choosing PowerEclipse as your framework, have fun!");
       bot.sendMessage(server.defaultChannel, msgArray);
       var step = ConfigFile.default_server.print_to_which_channel.split(" ");
       bot.createChannel(server, step.join("-"), function(channel, error) {
