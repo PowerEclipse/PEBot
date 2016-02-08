@@ -87,7 +87,7 @@ Commands.list = {
 Commands.shop = {
   name: "shop",
   help: "PowerEclipse server shop.",
-  level: 1,
+  level: 0,
   fn: function(bot, msg){
 	  bot.sendMessage(msg.channel, "http://store.powereclipse.com");
 }};
@@ -95,10 +95,19 @@ Commands.shop = {
 Commands.forum = {
   name: "forum",
   help: "PowerEclipse forum link.",
-  level: 1,
+  level: 0,
   fn: function(bot, msg){
 	bot.sendMessage(msg.channel, "http://forum.powereclipse.com");
 }};
+
+Commands.pack = {
+		name: "pack",
+		  help: "PowerEclipse ATLauncher link.",
+		  level: 0,
+		  fn: function (bot, msg) {
+			  bot.sendMessage(msg.channel, "You can find the pack on the ATLauncher by following this URL.\nhttps://www.atlauncher.com/pack/JurassicWorldRevelations")
+		  }
+}
 
 Commands.post = {
   name: "post",
@@ -138,7 +147,7 @@ Commands.rules = {
   name: "rules",
   help: "Something about keeping the peace",
   usage: "[number]",
-  level: 1,
+  level: 0,
   fn: function(bot, msg, suffix) {
 	  if (VerboseLog === true) {
 		  VerboseLogger.debug("VERBOSE LOG: Rules is being executed.");
@@ -241,7 +250,7 @@ Commands.info = {
     }
     var msgArray = [];
     msgArray.push("**PowerEclipse version " + version + "**");
-    msgArray.push("Using latest 5.x.x *Discord.js* version by *hydrabolt*.");
+    msgArray.push("Using latest *Discord.js* version by *hydrabolt*.");
     msgArray.push("<https://github.com/hydrabolt/discord.js>");
     msgArray.push("Made by <@96554096349175808>.");
     bot.sendMessage(msg.channel, msgArray);
@@ -309,20 +318,47 @@ Commands.online = {
   }
 };
 
-Commands.kill = {
-  name: "kill",
-  help: "This will instantly terminate all of the running instances of the bot without restarting.",
-  level: 1, // If an access level is set to 4 or higher, only the master user can use this
-  fn: function(bot, msg) {
-      if (VerboseLog === true) {
-        VerboseLogger.debug("VERBOSE LOG: Killswitch is being executed.");
-      }
-      bot.sendMessage(msg.channel, "An admin has requested to kill PE bot, exiting...");
-      bot.logout();
-      Logger.log("warn", "Disconnected via killswitch!");
-      process.exit(255);
-    } //exit node.js without an error
-};
+Commands.shutdown = {
+		  name: "shutdown",
+		  help: "This will instantly terminate all of the running instances of the bot without restarting.",
+		  level: 5, // If an access level is set to 4 or higher, only the master user can use this
+		  fn: function(bot, msg) {
+		      bot.sendMessage(msg.channel, "An admin has requested to shutdown, exiting...");
+		      Logger.log("warn", "Disconnected via shutdown!");
+		      var exec = require('child_process').exec;
+		      function puts(error, stdout, stderr) { console.log(stdout) }
+		      exec("pm2 stop all", puts);
+		    } //Tell PM2 to STOP all instances.
+		};
+
+		Commands.restart = {
+		  name: "restart",
+		  help: "This will instantly terminate all of the running instances of the bot and restart.",
+		  level: 5, // If an access level is set to 4 or higher, only the master user can use this
+		  fn: function(bot, msg) {
+		      bot.sendMessage(msg.channel, "Restarting...");
+		      bot.logout();
+		      Logger.log("warn", "Restarting via command!");
+		      var sys = require('util')
+		      var exec = require('child_process').exec;
+		      function puts(error, stdout, stderr) { sys.puts(stdout) }
+		      exec("pm2 restart all", puts);
+		    } //Tell PM2 to RESTART all instances.
+		};
+
+		Commands.indev = {
+		  name: "indev",
+		  help: "Remove discord.js and pull from indev then restart.",
+		  level: 5, // If an access level is set to 4 or higher, only the master user can use this
+		  fn: function(bot, msg) {
+		      bot.sendMessage(msg.channel, "Pulling from indev and restarting!");
+		      Logger.log("warn", "Updating lib, things may go wrong!");
+		      var sys = require('util')
+		      var exec = require('child_process').exec;
+		      function puts(error, stdout, stderr) { sys.puts(stdout) }
+		      exec("rm -rf node_modules/discord.js && npm install git+https://github.com/hydrabolt/discord.js.git#indev && pm2 restart all", puts);
+		    } //Remove current lib, pull from indev and install then restart all instances.
+		};
 
 Commands.update = {
   name: "update",
