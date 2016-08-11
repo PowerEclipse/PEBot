@@ -261,4 +261,5 @@ process.on("beforeExit", function() {
   }
 });
 // Connection starter
-bot.login(ConfigFile.discord.email, ConfigFile.discord.password).then(init).catch(err);
+// bot.login(ConfigFile.discord.email, ConfigFile.discord.password).then(init).catch(err); // Depecreated
+bot.loginWithToken(ConfigFile.discord.token).then(init).catch(err);
