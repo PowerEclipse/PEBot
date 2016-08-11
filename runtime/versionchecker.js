@@ -19,7 +19,7 @@ exports.getCurrentGamma		= function() { return version[3]; };
 exports.getLatestVersion = function(callback) {
 
 	// fetch latest version number from GitHub
-	Request("https://raw.githubusercontent.com/PowerEclipse/PEBot/master/runtime/versionchecker.js", function (error, response, body) {
+	Request("https://github.com/PowerEclipse/PEBot/blob/master/runtime/versionchecker.js", function (error, response, body) {
 
 		if (error) { return callback(error, null); } // error handle
 
