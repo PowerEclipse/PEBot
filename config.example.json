@@ -12,9 +12,9 @@
     ],
 
     "discord" : {
-        "email" : "foo@bar.net",
-        "password" : "hunter2"
+        "token" : "INSERT TOKEN HERE"
     },
+
     "bot_settings" : {
         "cmd_prefix": "++",
         "help_mode": "private",
